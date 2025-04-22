@@ -1,17 +1,17 @@
 ---
-title: "Transports"
-description: "Learn about MCP's communication mechanisms"
+title: "Transports" | "传输层"
+description: "Learn about MCP's communication mechanisms" | "了解MCP的通信机制"
 ---
 
-Transports in the Model Context Protocol (MCP) provide the foundation for communication between clients and servers. A transport handles the underlying mechanics of how messages are sent and received.
+Transports in the Model Context Protocol (MCP) provide the foundation for communication between clients and servers. A transport handles the underlying mechanics of how messages are sent and received. | 在Model Context Protocol (MCP)中，传输层为客户端和服务器之间的通信提供了基础。传输层负责处理消息发送和接收的底层机制。
 
-## Message Format
+## Message Format | 消息格式
 
-MCP uses [JSON-RPC](https://www.jsonrpc.org/) 2.0 as its wire format. The transport layer is responsible for converting MCP protocol messages into JSON-RPC format for transmission and converting received JSON-RPC messages back into MCP protocol messages.
+MCP uses [JSON-RPC](https://www.jsonrpc.org/) 2.0 as its wire format. The transport layer is responsible for converting MCP protocol messages into JSON-RPC format for transmission and converting received JSON-RPC messages back into MCP protocol messages. | MCP使用[JSON-RPC](https://www.jsonrpc.org/) 2.0作为其传输格式。传输层负责将MCP协议消息转换为JSON-RPC格式进行传输，并将接收到的JSON-RPC消息转换回MCP协议消息。
 
-There are three types of JSON-RPC messages used:
+There are three types of JSON-RPC messages used: | 使用三种类型的JSON-RPC消息：
 
-### Requests
+### Requests | 请求
 ```typescript
 {
   jsonrpc: "2.0",
@@ -21,7 +21,7 @@ There are three types of JSON-RPC messages used:
 }
 ```
 
-### Responses
+### Responses | 响应
 ```typescript
 {
   jsonrpc: "2.0",
@@ -35,7 +35,7 @@ There are three types of JSON-RPC messages used:
 }
 ```
 
-### Notifications
+### Notifications | 通知
 ```typescript
 {
   jsonrpc: "2.0",
@@ -44,19 +44,19 @@ There are three types of JSON-RPC messages used:
 }
 ```
 
-## Built-in Transport Types
+## Built-in Transport Types | 内置传输类型
 
-MCP includes two standard transport implementations:
+MCP includes two standard transport implementations: | MCP包含两种标准传输实现：
 
-### Standard Input/Output (stdio)
+### Standard Input/Output (stdio) | 标准输入/输出(stdio)
 
-The stdio transport enables communication through standard input and output streams. This is particularly useful for local integrations and command-line tools.
+The stdio transport enables communication through standard input and output streams. This is particularly useful for local integrations and command-line tools. | stdio传输通过标准输入和输出流实现通信。这对于本地集成和命令行工具特别有用。
 
-Use stdio when:
-- Building command-line tools
-- Implementing local integrations
-- Needing simple process communication
-- Working with shell scripts
+Use stdio when: | 在以下情况下使用stdio：
+- Building command-line tools | 构建命令行工具
+- Implementing local integrations | 实现本地集成
+- Needing simple process communication | 需要简单的进程通信
+- Working with shell scripts | 使用shell脚本
 
 <Tabs>
   <Tab title="TypeScript (Server)">
@@ -114,24 +114,24 @@ Use stdio when:
   </Tab>
 </Tabs>
 
-### Server-Sent Events (SSE)
+### Server-Sent Events (SSE) | 服务器发送事件(SSE)
 
-SSE transport enables server-to-client streaming with HTTP POST requests for client-to-server communication.
+SSE transport enables server-to-client streaming with HTTP POST requests for client-to-server communication. | SSE传输通过HTTP POST请求实现服务器到客户端的流式通信，用于客户端到服务器的通信。
 
-Use SSE when:
-- Only server-to-client streaming is needed
-- Working with restricted networks
-- Implementing simple updates
+Use SSE when: | 在以下情况下使用SSE：
+- Only server-to-client streaming is needed | 只需要服务器到客户端的流式传输
+- Working with restricted networks | 在受限网络环境中工作
+- Implementing simple updates | 实现简单的更新
 
-#### Security Warning: DNS Rebinding Attacks
+#### Security Warning: DNS Rebinding Attacks | 安全警告：DNS重绑定攻击
 
-SSE transports can be vulnerable to DNS rebinding attacks if not properly secured. To prevent this:
+SSE transports can be vulnerable to DNS rebinding attacks if not properly secured. To prevent this: | 如果未正确保护，SSE传输可能容易受到DNS重绑定攻击。为防止这种情况：
 
-1. **Always validate Origin headers** on incoming SSE connections to ensure they come from expected sources
-2. **Avoid binding servers to all network interfaces** (0.0.0.0) when running locally - bind only to localhost (127.0.0.1) instead
-3. **Implement proper authentication** for all SSE connections
+1. **Always validate Origin headers** on incoming SSE connections to ensure they come from expected sources | 始终验证传入SSE连接的Origin头，确保它们来自预期的来源
+2. **Avoid binding servers to all network interfaces** (0.0.0.0) when running locally - bind only to localhost (127.0.0.1) instead | 在本地运行时避免将服务器绑定到所有网络接口(0.0.0.0)，而是只绑定到localhost(127.0.0.1)
+3. **Implement proper authentication** for all SSE connections | 为所有SSE连接实现适当的身份验证
 
-Without these protections, attackers could use DNS rebinding to interact with local MCP servers from remote websites.
+Without these protections, attackers could use DNS rebinding to interact with local MCP servers from remote websites. | 如果没有这些保护措施，攻击者可能会使用DNS重绑定从远程网站与本地MCP服务器进行交互。
 
 <Tabs>
   <Tab title="TypeScript (Server)">
@@ -211,15 +211,15 @@ Without these protections, attackers could use DNS rebinding to interact with lo
   </Tab>
 </Tabs>
 
-## Custom Transports
+## Custom Transports | 自定义传输
 
-MCP makes it easy to implement custom transports for specific needs. Any transport implementation just needs to conform to the Transport interface:
+MCP makes it easy to implement custom transports for specific needs. Any transport implementation just needs to conform to the Transport interface: | MCP使得为特定需求实现自定义传输变得容易。任何传输实现只需要符合Transport接口：
 
-You can implement custom transports for:
-- Custom network protocols
-- Specialized communication channels
-- Integration with existing systems
-- Performance optimization
+You can implement custom transports for: | 您可以为以下情况实现自定义传输：
+- Custom network protocols | 自定义网络协议
+- Specialized communication channels | 专门的通信通道
+- Integration with existing systems | 与现有系统集成
+- Performance optimization | 性能优化
 
 <Tabs>
   <Tab title="TypeScript">
@@ -278,15 +278,15 @@ You can implement custom transports for:
   </Tab>
 </Tabs>
 
-## Error Handling
+## Error Handling | 错误处理
 
-Transport implementations should handle various error scenarios:
+Transport implementations should handle various error scenarios: | 传输实现应该处理各种错误场景：
 
-1. Connection errors
-2. Message parsing errors
-3. Protocol errors
-4. Network timeouts
-5. Resource cleanup
+1. Connection errors | 连接错误
+2. Message parsing errors | 消息解析错误
+3. Protocol errors | 协议错误
+4. Network timeouts | 网络超时
+5. Resource cleanup | 资源清理
 
 Example error handling:
 
@@ -353,58 +353,58 @@ Example error handling:
   </Tab>
 </Tabs>
 
-## Best Practices
+## Best Practices | 最佳实践
 
-When implementing or using MCP transport:
+When implementing or using MCP transport: | 在实现或使用MCP传输时：
 
-1. Handle connection lifecycle properly
-2. Implement proper error handling
-3. Clean up resources on connection close
-4. Use appropriate timeouts
-5. Validate messages before sending
-6. Log transport events for debugging
-7. Implement reconnection logic when appropriate
-8. Handle backpressure in message queues
-9. Monitor connection health
-10. Implement proper security measures
+1. Handle connection lifecycle properly | 正确处理连接生命周期
+2. Implement proper error handling | 实现适当的错误处理
+3. Clean up resources on connection close | 在连接关闭时清理资源
+4. Use appropriate timeouts | 使用适当的超时设置
+5. Validate messages before sending | 在发送前验证消息
+6. Log transport events for debugging | 记录传输事件以便调试
+7. Implement reconnection logic when appropriate | 在适当时实现重连逻辑
+8. Handle backpressure in message queues | 处理消息队列中的背压
+9. Monitor connection health | 监控连接健康状态
+10. Implement proper security measures | 实现适当的安全措施
 
-## Security Considerations
+## Security Considerations | 安全考虑
 
-When implementing transport:
+When implementing transport: | 在实现传输时：
 
-### Authentication and Authorization
-- Implement proper authentication mechanisms
-- Validate client credentials
-- Use secure token handling
-- Implement authorization checks
+### Authentication and Authorization | 认证和授权
+- Implement proper authentication mechanisms | 实现适当的认证机制
+- Validate client credentials | 验证客户端凭据
+- Use secure token handling | 使用安全的令牌处理
+- Implement authorization checks | 实现授权检查
 
-### Data Security
-- Use TLS for network transport
-- Encrypt sensitive data
-- Validate message integrity
-- Implement message size limits
-- Sanitize input data
+### Data Security | 数据安全
+- Use TLS for network transport | 使用TLS进行网络传输
+- Encrypt sensitive data | 加密敏感数据
+- Validate message integrity | 验证消息完整性
+- Implement message size limits | 实现消息大小限制
+- Sanitize input data | 清理输入数据
 
-### Network Security
-- Implement rate limiting
-- Use appropriate timeouts
-- Handle denial of service scenarios
-- Monitor for unusual patterns
-- Implement proper firewall rules
-- For SSE transports, validate Origin headers to prevent DNS rebinding attacks
-- For local SSE servers, bind only to localhost (127.0.0.1) instead of all interfaces (0.0.0.0)
+### Network Security | 网络安全
+- Implement rate limiting | 实现速率限制
+- Use appropriate timeouts | 使用适当的超时设置
+- Handle denial of service scenarios | 处理拒绝服务场景
+- Monitor for unusual patterns | 监控异常模式
+- Implement proper firewall rules | 实现适当的防火墙规则
+- For SSE transports, validate Origin headers to prevent DNS rebinding attacks | 对于SSE传输，验证Origin头以防止DNS重绑定攻击
+- For local SSE servers, bind only to localhost (127.0.0.1) instead of all interfaces (0.0.0.0) | 对于本地SSE服务器，只绑定到localhost(127.0.0.1)而不是所有接口(0.0.0.0)
 
-## Debugging Transport
+## Debugging Transport | 调试传输
 
-Tips for debugging transport issues:
+Tips for debugging transport issues: | 调试传输问题的提示：
 
-1. Enable debug logging
-2. Monitor message flow
-3. Check connection states
-4. Validate message formats
-5. Test error scenarios
-6. Use network analysis tools
-7. Implement health checks
-8. Monitor resource usage
-9. Test edge cases
-10. Use proper error tracking
+1. Enable debug logging | 启用调试日志
+2. Monitor message flow | 监控消息流
+3. Check connection states | 检查连接状态
+4. Validate message formats | 验证消息格式
+5. Test error scenarios | 测试错误场景
+6. Use network analysis tools | 使用网络分析工具
+7. Implement health checks | 实现健康检查
+8. Monitor resource usage | 监控资源使用情况
+9. Test edge cases | 测试边缘情况
+10. Use proper error tracking | 使用适当的错误跟踪
